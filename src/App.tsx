@@ -31,7 +31,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://b451-34-28-173-220.ngrok-free.app', {
+      const response = await fetch('https://4d7d-34-28-173-220.ngrok-free.app', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
