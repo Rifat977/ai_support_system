@@ -8,6 +8,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [accentColor, setAccentColor] = useState('indigo');
+  const [isFirstMessage, setIsFirstMessage] = useState(true);
 
   const colors = [
     'indigo', 'purple', 'blue', 'emerald', 'rose'
@@ -21,6 +22,8 @@ function App() {
     scrollToBottom();
   }, [messages]);
 
+  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -28,6 +31,7 @@ function App() {
     const userMessage = input.trim();
     setInput('');
     setMessages(prev => [...prev, { type: 'user', content: userMessage }]);
+    setIsFirstMessage(false);
     setIsLoading(true);
 
     try {
@@ -58,7 +62,7 @@ function App() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Sparkles className={`w-6 h-6 text-${accentColor}-500`} />
-            <h1 className="text-xl font-bold">AI Assistant</h1>
+            <h1 className={`text-xl font-bold text-${accentColor}-500`}>Daffodil AI Assistance</h1>
           </div>
           <div className="flex items-center gap-2">
             {colors.map(color => (
@@ -76,6 +80,19 @@ function App() {
       {/* Chat Container */}
       <div className="container mx-auto px-4 pt-24 pb-32">
         <div className="space-y-4">
+
+        {isFirstMessage && (
+          <div className="flex flex-col items-center justify-center py-16">
+            <div className={`w-24 h-24 rounded-full bg-${accentColor}-500/20 flex items-center justify-center shadow-lg`}>
+              {/* Add your logo here */}
+              <Sparkles className={`w-8 h-8 text-${accentColor}-500`} />
+            </div>
+            <h3 className="text-2xl font-semibold text-gray-100 mt-6 tracking-wide">Hi, I'm Daffodil AI Assistance.</h3>
+            <p className="text-gray-300 mt-2 text-center leading-relaxed">How can I assist you today? Feel free to ask me anything!</p>
+          </div>
+        )}
+
+
           {messages.map((message, index) => (
             <div
               key={index}
@@ -84,7 +101,7 @@ function App() {
               }`}
             >
               {message.type === 'bot' && (
-                <div className={`w-8 h-8 rounded-lg bg-${accentColor}-500/20 flex items-center justify-center`}>
+                <div className={`w-10 h-10 rounded-full bg-${accentColor}-500/20 flex items-center justify-center`}>
                   <Bot className={`w-5 h-5 text-${accentColor}-500`} />
                 </div>
               )}
@@ -102,15 +119,16 @@ function App() {
 
               </div>
               {message.type === 'user' && (
-                <div className={`w-8 h-8 rounded-lg bg-${accentColor}-500 flex items-center justify-center`}>
+                <div className={`w-10 h-10 rounded-full bg-${accentColor}-500 flex items-center justify-center`}>
                   <User className="w-5 h-5 text-white" />
                 </div>
               )}
             </div>
           ))}
+
           {isLoading && (
             <div className="flex items-start gap-3">
-              <div className={`w-8 h-8 rounded-lg bg-${accentColor}-500/20 flex items-center justify-center`}>
+              <div className={`w-10 h-10 rounded-full bg-${accentColor}-500/20 flex items-center justify-center`}>
                 <Bot className={`w-5 h-5 text-${accentColor}-500`} />
               </div>
               <div className="bg-gray-800 rounded-2xl px-4 py-3 animate-pulse">
@@ -129,19 +147,19 @@ function App() {
       {/* Input Form */}
       <div className="fixed bottom-0 left-0 right-0 bg-gray-800/50 backdrop-blur-lg border-t border-gray-700">
         <div className="container mx-auto px-4 py-4">
-          <form onSubmit={handleSubmit} className="flex gap-2">
+          <form onSubmit={handleSubmit} className="flex gap-4 items-center">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 bg-gray-700 text-white rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-gray-600"
+              placeholder="Ask Daffodil AI Assistance"
+              className="flex-1 bg-gray-700 text-white rounded-2xl px-6 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-gray-600 shadow-lg hover:bg-gray-600"
+              style={{ height: '50px' }}
             />
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
-              className={`px-4 py-2 rounded-xl bg-${accentColor}-500 text-white flex items-center gap-2 
-                disabled:opacity-50 disabled:cursor-not-allowed hover:bg-${accentColor}-600 transition-colors`}
+              className={`px-6 py-3 rounded-2xl bg-${accentColor}-500 text-white flex items-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-${accentColor}-600 transition-colors`}
             >
               <Send className="w-5 h-5" />
               <span className="hidden sm:inline">Send</span>
@@ -149,6 +167,8 @@ function App() {
           </form>
         </div>
       </div>
+
+
     </div>
   );
 }
