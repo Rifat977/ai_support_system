@@ -41,6 +41,7 @@ function App() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ query: userMessage }),
+        mode: 'no-cors'
       });
 
       const data = await response.json();
