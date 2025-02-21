@@ -35,12 +35,12 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://relaxed-narwhal-casual.ngrok-free.app/', {
+      const response = await fetch('http://203.190.8.37:9000/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ query: userMessage }),
       });
 
       const data = await response.json();
