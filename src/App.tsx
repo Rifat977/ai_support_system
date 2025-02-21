@@ -35,7 +35,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://203.190.8.37:9000/chat', {
+      const response = await fetch('http://203.190.8.37:9000/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
